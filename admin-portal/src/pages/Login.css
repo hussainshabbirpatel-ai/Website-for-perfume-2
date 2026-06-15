@@ -1,0 +1,33 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #8B0000, #DAA520);
+}
+
+form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+form input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+form button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #8B0000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

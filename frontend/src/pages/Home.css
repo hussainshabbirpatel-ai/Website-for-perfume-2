@@ -1,0 +1,17 @@
+.hero {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.cta-button {
+  display: inline-block;
+  background-color: white;
+  color: var(--primary-color);
+  padding: 12px 30px;
+  border-radius: 4px;
+  margin-top: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}

@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: starkperfumes-db
+    environment:
+      POSTGRES_USER: starkadmin
+      POSTGRES_PASSWORD: starkperfumes@123
+      POSTGRES_DB: starkperfumes_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - starkperfumes-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: starkperfumes-api
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://starkadmin:starkperfumes@123@postgres:5432/starkperfumes_db
+      JWT_SECRET: your_jwt_secret_key_here
+      STRIPE_SECRET_KEY: your_stripe_secret_key_here
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+    networks:
+      - starkperfumes-network
+    volumes:
+      - ./backend:/app
+
+  # Frontend (Customer)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: starkperfumes-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+    networks:
+      - starkperfumes-network
+    volumes:
+      - ./frontend:/app
+
+  # Admin Portal
+  admin:
+    build:
+      context: ./admin-portal
+      dockerfile: Dockerfile
+    container_name: starkperfumes-admin
+    ports:
+      - "3001:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5000/api
+    networks:
+      - starkperfumes-network
+    volumes:
+      - ./admin-portal:/app
+
+volumes:
+  postgres_data:
+
+networks:
+  starkperfumes-network:
+    driver: bridge
